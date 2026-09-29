@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Register Owner · Pet Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        *{box-sizing:border-box}
+        body{
+          margin:0;min-height:100vh;background:#f6f3ec;color:#20302c;
+          font-family:'Work Sans',sans-serif;
+          background-image:radial-gradient(circle at 8% 12%,#33574f10 0,transparent 45%),
+                           radial-gradient(circle at 92% 85%,#e8935f14 0,transparent 40%);
+        }
+        .navbar{
+          display:flex;justify-content:center;gap:45px;
+          background:#233f39;padding:16px;
+          box-shadow:0 4px 15px #20302c26;
+        }
+        .navbar a{color:#f3f6f4;text-decoration:none;font-weight:500;padding:8px 4px}
+
+        .page{display:flex;justify-content:center;padding:40px 20px}
+        .sheet{
+          width:100%;max-width:520px;background:white;border-radius:20px;
+          box-shadow:0 30px 60px -30px #20302c59;
+        }
+        .form-side{padding:48px 44px}
+        h2{font:600 22px 'Fraunces',serif;margin:0 0 6px}
+        .sub{color:#6d7d76;font-size:14px;margin:0 0 30px}
+        .field{margin-bottom:20px}
+        label{display:block;font-size:13px;font-weight:500;color:#6d7d76;margin-bottom:7px}
+        input{
+          width:100%;padding:13px 14px;border:1px solid #e1dbcb;border-radius:10px;
+          font:15px 'Work Sans',sans-serif;color:#20302c;background:#f6f3ec;outline:none;
+        }
+        input:focus{border-color:#33574f;box-shadow:0 0 0 3px #33574f26}
+        button{
+          width:100%;padding:14px;border:0;border-radius:10px;
+          background:#e8935f;color:white;font:600 15.5px 'Work Sans',sans-serif;cursor:pointer;
+        }
+        button:hover{background:#e08749}
+        @media(max-width:600px){
+          .navbar{gap:18px;padding:14px 10px}
+          .navbar a{font-size:14px}
+          .page{padding:25px 15px}
+          .form-side{padding:35px 25px}
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar">
+    <a href="/owners">Register</a>
+    <a href="/pets">Your Pets</a>
+    <a href="/appointments">Appointments</a>
+</nav>
+
+<main class="page">
+    <div class="sheet" id="owners">
+        <div class="form-side">
+            <h2>Register owner</h2>
+            <p class="sub">Add a pet owner to the clinic records.</p>
+
+            <form action="/owners" method="post">
+
+            <div class="field">
+                    <label for="name">Owner name</label>
+                    <input id="name" name="name" type="text" placeholder="Menna Ahmed" required>
+                </div>
+
+                <div class="field">
+                    <label for="phone">Phone number</label>
+                    <input id="phone" name = "phone" type="tel" placeholder="+20 110123548" required>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="menna@email.com" required>
+                </div>
+
+                <button type="submit">Add owner</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

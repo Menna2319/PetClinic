@@ -6,11 +6,9 @@ import java.util.List ;
 @Entity
 @Table (name = "owners")
 public class Owner {
-    @OneToMany
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-
-    private long id;
+    private Long id;
     private String name;
     private String phone;
     private String email;

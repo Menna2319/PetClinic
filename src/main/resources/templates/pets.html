@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Your Pets · Pet Clinic</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Work+Sans:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f6f3ec;
+            color: #20302c;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 45px;
+            background: #233f39;
+            padding: 16px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2 {
+            font-family: 'Fraunces', serif;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(32,48,44,.12);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #6d7d76;
+            font-size: 13px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #e1dbcb;
+            border-radius: 9px;
+            background: #f6f3ec;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #e8935f;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e08749;
+        }
+
+        .pet {
+            border-top: 1px solid #e1dbcb;
+            padding: 18px 0;
+        }
+
+        .pet:first-child {
+            border-top: none;
+        }
+
+        .pet h3 {
+            margin: 0 0 8px;
+        }
+
+        .pet p {
+            margin: 5px 0;
+            color: #6d7d76;
+            font-size: 14px;
+        }
+
+        .history {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f6f3ec;
+            color: #20302c;
+            font-size: 14px;
+        }
+
+        @media(max-width:700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/owners">Register</a>
+    <a href="/pets">Your Pets</a>
+    <a href="/appointments">Appointments</a>
+</nav>
+
+<div class="page">
+
+    <h1>Your Pets</h1>
+
+    <p>
+        Pets belonging to
+        <strong th:text="${owner.name}">Owner Name</strong>
+    </p>
+
+    <div class="grid">
+
+        <!-- ADD PET -->
+        <div class="card">
+
+            <h2>Add a Pet</h2>
+
+            <form th:action="@{/pets/add}" method="post"
+                  th:object="${pet}">
+
+                <input type="hidden"
+                       name="ownerId"
+                       th:value="${owner.id}">
+
+                <label>Pet name</label>
+                <input type="text"
+                       th:field="*{petName}"
+                       required>
+
+                <label>Pet type</label>
+                <select th:field="*{petType}" required>
+                    <option value="">Choose type</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Bird">Bird</option>
+                    <option value="Rabbit">Rabbit</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Breed</label>
+                <input type="text"
+                       th:field="*{petBreed}">
+
+                <label>Sex</label>
+                <select th:field="*{sex}">
+                    <option value="">Choose</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <label>Weight</label>
+                <input type="number"
+                       step="0.1"
+                       th:field="*{petWeight}">
+
+                <label>Date of birth</label>
+                <input type="date"
+                       th:field="*{dateOfBirth}">
+
+                <label>Pet history</label>
+                <textarea th:field="*{petHistory}"
+                          placeholder="Previous illnesses, treatments, vaccinations..."></textarea>
+
+                <button type="submit">
+                    Add Pet
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- MY PETS -->
+        <div class="card">
+
+            <h2>My Pets</h2>
+
+            <div th:if="${#lists.isEmpty(pets)}">
+                <p>No pets registered yet.</p>
+            </div>
+
+            <div th:each="pet : ${pets}" class="pet">
+
+                <h3 th:text="${pet.petName}">
+                    Buddy
+                </h3>
+
+                <p>
+                    <strong>Type:</strong>
+                    <span th:text="${pet.petType}"></span>
+                </p>
+
+                <p>
+                    <strong>Breed:</strong>
+                    <span th:text="${pet.petBreed}"></span>
+                </p>
+
+                <p>
+                    <strong>Sex:</strong>
+                    <span th:text="${pet.sex}"></span>
+                </p>
+
+                <p>
+                    <strong>Weight:</strong>
+                    <span th:text="${pet.petWeight}"></span> kg
+                </p>
+
+                <p>
+                    <strong>Date of birth:</strong>
+                    <span th:text="${pet.dateOfBirth}"></span>
+                </p>
+
+                <div class="history">
+
+                    <strong>History</strong>
+
+                    <p th:text="${pet.petHistory}">
+                        No history available.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
